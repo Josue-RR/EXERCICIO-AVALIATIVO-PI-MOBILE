@@ -7,7 +7,7 @@ export default function App() {
   const [result, setResult] = React.useState('0');
 
   const handlePress = (value) => {
-    setInput(input + value);
+    setInput((prev) => prev + value);
   };
 
   const clear = () => {
@@ -17,9 +17,9 @@ export default function App() {
 
   const calculate = () => {
     try {
-      const evalResult = eval(input);
-      setResult(String(evalResult));
-    } catch (error) {
+      const res = eval(input);
+      setResult(String(res));
+    } catch {
       setResult('Erro');
     }
   };
@@ -27,11 +27,14 @@ export default function App() {
   return (
     <PaperProvider>
       <View style={styles.container}>
+
+        {/* DISPLAY */}
         <View style={styles.display}>
           <Text variant="headlineMedium">{input || '0'}</Text>
           <Text variant="headlineLarge">{result}</Text>
         </View>
 
+        {/* BOTÕES */}
         <View style={styles.row}>
           <Button mode="contained" onPress={clear}>C</Button>
           <Button mode="contained" onPress={() => handlePress('/')}>/</Button>
@@ -59,6 +62,7 @@ export default function App() {
           <Button mode="contained" onPress={() => handlePress('3')}>3</Button>
           <Button mode="contained" onPress={() => handlePress('0')}>0</Button>
         </View>
+
       </View>
     </PaperProvider>
   );
@@ -72,9 +76,10 @@ const styles = StyleSheet.create({
   },
   display: {
     marginBottom: 20,
-    padding: 10,
+    padding: 15,
     backgroundColor: '#eee',
     borderRadius: 10,
+    alignItems: 'flex-end',
   },
   row: {
     flexDirection: 'row',
